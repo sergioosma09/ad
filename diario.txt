@@ -1,0 +1,22 @@
+11/8/2018:
+	sudo update-pc
+	instalados monodevelop y prerequisitos de android studio
+	bitnami.com 
+ 	descargamos lamp
+	instalar: marcar bit de ejecucion, doble click y esperar
+	password: sistemas
+	ejecutamos lamp y creamos base de datos dbprueba desde Phpmyadmin
+	usuario: root y password:sistemas
+	crear tabla categoria
+
+12/8/2018:
+crear tabla categoria mediante ddl
+
+create table categoria(
+	id serial primary key,
+	nombre varchar(50) not null unique
+);
+
+insert into categoria (nombre) values ('categoria 1');
+insert into categoria (nombre) values ('categoria 2');
+insert into categoria (nombre) values ('categoria 3');
