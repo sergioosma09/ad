@@ -1,4 +1,4 @@
-11/8/2018:
+11/9/2018:
 	sudo update-pc
 	instalados monodevelop y prerequisitos de android studio
 	bitnami.com 
@@ -9,7 +9,22 @@
 	usuario: root y password:sistemas
 	crear tabla categoria
 
-12/8/2018:
+12/9/2018:
 crear tabla categoria mediante ddl
 
 hecho el git config user name, email y push default.
+
+14/9/2018:
+
+Propuesta instalación de monodevelop en ubuntu 16.04.
+Descarga del "conector" de mysql para .net desde la página oficial.
+
+Al intentar conectar lanza una excepción;
+Host '127.0.0.1' is not allowed...
+Para arreglarlo se cambia la siguiente linea:
+[mysqld]
+...
+# skip-name-resolve=1
+The host localhost does not support...
+Para arreglarlo añadimos ssl-mode=none:
+server=localhost; database=dbprueba;user=root;password=sistemas;ssl-mode=none
