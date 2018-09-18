@@ -25,6 +25,29 @@ Para arreglarlo se cambia la siguiente linea:
 [mysqld]
 ...
 # skip-name-resolve=1
+Ahora tenemos otra excepción:
 The host localhost does not support...
 Para arreglarlo añadimos ssl-mode=none:
 server=localhost; database=dbprueba;user=root;password=sistemas;ssl-mode=none
+
+18/9/2018:
+
+private static string[] getFieldNames(IDataReader dataReader){
+			int fieldCount = dataReader.FieldCount;
+			string[] fieldNames = new string[fieldCount];
+			for (int index = 0; index < fieldCount; index++)
+				fieldNames[index] = dataReader.GetName(index);
+			return fieldNames;
+
+		}
+
+O
+
+private static string[] getFieldNames(IDataReader dataReader){
+			int fieldCount = dataReader.FieldCount;
+			List<string> fieldNameList = new List<string>();
+			for (int index = 0; index < fieldCount; index++)
+				fieldNameList.Add(dataReader.GetName(index));
+			return fieldNameList.ToArray();
+		}
+
