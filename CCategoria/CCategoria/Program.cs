@@ -1,6 +1,7 @@
 ﻿using System;
 using Gtk;
 
+
 namespace CCategoria
 {
     class MainClass
