@@ -51,3 +51,8 @@ private static string[] getFieldNames(IDataReader dataReader){
 			return fieldNameList.ToArray();
 		}
 
+
+25/9/2018:
+CCategoria pruebas: insert, update,delete.
+
+
