@@ -7,6 +7,7 @@ using CCategoria;
 using System.Reflection;
 using Serpis.Ad;
 
+
 public partial class MainWindow : Gtk.Window
 {
 
@@ -16,47 +17,47 @@ public partial class MainWindow : Gtk.Window
 		App.Instance.DbConnection = new MySqlConnection(
 				"server=localhost; database=dbprueba;user=root;password=sistemas;ssl-mode=none"
 			);
-		new CategoriaWindow();
+
 
 		App.Instance.DbConnection.Open();
-
+		//new CategoriaWindow();
 		//insert();
 		//update();
-		update(new Categoria(3, "categoria 3" + DateTime.Now));
+		//update(new Categoria(3, "categoria 3" + DateTime.Now));
 		//delete();
 
-		//TreeViewHelper.Fill(treeView, CategoriaDao.List);
+		TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
 
-		CellRendererText cellRendererText = new CellRendererText();
-
-
-		string[] properties = new string[] { "Id", "Nombre" };
-		foreach (string property in properties)
-		{
-			treeView.AppendColumn(property, cellRendererText, delegate (TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model, TreeIter iter)
-		{
-			object model = tree_model.GetValue(iter, 0);
-			object value = model.GetType().GetProperty(property).GetValue(model);
-			cellRendererText.Text = value + "";
-
-		});
-
-		}
-
-		ListStore listStore = new ListStore(typeof(Categoria));
-		treeView.Model = listStore;
-
-		//IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
-		//dbCommand.CommandText = "select id,nombre from categoria order by id";
-		//IDataReader dataReader = dbCommand.ExecuteReader();
-		//while (dataReader.Read())
-		//	listStore.AppendValues(new Categoria((ulong)dataReader["id"], (string)dataReader["nombre"]));
+		//CellRendererText cellRendererText = new CellRendererText();
 
 
-		//dataReader.Close();
+		//string[] properties = new string[] { "Id", "Nombre" };
+		//foreach (string property in properties)
+		//{
+		//	treeView.AppendColumn(property, cellRendererText, delegate (TreeViewColumn tree_column, CellRenderer cell, TreeModel tree_model, TreeIter iter)
+		//{
+		//	object model = tree_model.GetValue(iter, 0);
+		//	object value = model.GetType().GetProperty(property).GetValue(model);
+		//	cellRendererText.Text = value + "";
 
-		foreach (Categoria categoria in CategoriaDao.Categorias)
-			listStore.AppendValues(categoria);
+		//});
+
+		//}
+
+		//ListStore listStore = new ListStore(typeof(Categoria));
+		//treeView.Model = listStore;
+
+		////IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
+		////dbCommand.CommandText = "select id,nombre from categoria order by id";
+		////IDataReader dataReader = dbCommand.ExecuteReader();
+		////while (dataReader.Read())
+		////	listStore.AppendValues(new Categoria((ulong)dataReader["id"], (string)dataReader["nombre"]));
+
+
+		////dataReader.Close();
+
+		//foreach (Categoria categoria in CategoriaDao.Categorias)
+			//listStore.AppendValues(categoria);
 
 
 	}

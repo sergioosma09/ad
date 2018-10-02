@@ -5,6 +5,7 @@
   </configuration>
   <import>
     <widget-library name="../bin/Debug/CCategoria.exe" internal="true" />
+    <widget-library name="../../../CSerpisGtk/CSerpisGtk/bin/Debug/CSerpisGtk.dll" />
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="400 303">
     <action-group name="Default">
