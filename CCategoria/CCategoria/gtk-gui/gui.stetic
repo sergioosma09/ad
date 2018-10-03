@@ -14,6 +14,21 @@
         <property name="Label" translatable="yes" />
         <property name="StockId">gtk-new</property>
       </action>
+      <action id="editAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-edit</property>
+      </action>
+      <action id="deleteAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-delete</property>
+      </action>
+      <action id="refreshAction">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-refresh</property>
+      </action>
     </action-group>
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
@@ -29,6 +44,9 @@
             <property name="ShowArrow">False</property>
             <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="newAction" />
+              <node type="Toolitem" action="editAction" />
+              <node type="Toolitem" action="deleteAction" />
+              <node type="Toolitem" action="refreshAction" />
             </node>
           </widget>
           <packing>
