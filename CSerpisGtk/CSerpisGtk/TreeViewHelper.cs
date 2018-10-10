@@ -26,9 +26,7 @@ namespace Serpis.Ad
 
 			foreach (object obj in enumerable)
 				listStore.AppendValues(obj);
-
-            //foreach ( categoria in CategoriaDao.Categorias)
-                //listStore.AppendValues(categoria);
+          
 		}  
     }
 }
