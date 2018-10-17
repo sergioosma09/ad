@@ -8,94 +8,70 @@ using System.Reflection;
 using Serpis.Ad;
 
 
+
+
 public partial class MainWindow : Gtk.Window
 {
 
 	public MainWindow() : base(Gtk.WindowType.Toplevel)
 	{
 		Build();
-		App.Instance.DbConnection = new MySqlConnection(
-				"server=localhost; database=dbprueba;user=root;password=sistemas;ssl-mode=none"
-			);
 
+		Title = "Categoría";
 
-		App.Instance.DbConnection.Open();
+		TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
 
-        TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
+		newAction.Activated += delegate
+		{
 
-        newAction.Activated += delegate {
-			
 			new CategoriaWindow(new Categoria());
-        };
+		};
 
-        editAction.Activated += delegate {
-			object id = GetId(treeView);
-			Console.WriteLine("Id=" + id);
-			Categoria categoria = CategoriaDao.Load(GetId(treeView));
+		editAction.Activated += delegate
+		{
+			object id = TreeViewHelper.GetId(treeView);
+			Categoria categoria = CategoriaDao.Load(TreeViewHelper.GetId(treeView));
 			new CategoriaWindow(categoria);
 
 
-        };
+		};
+		deleteAction.Activated += delegate
+		{
 
-        treeView.Selection.Changed += delegate {
-            refreshUI();
-        };
+			if (WindowHelper.Confirm(this, "¿Quieres eliminar el registro?"))
+			{
+				object id = TreeViewHelper.GetId(treeView);
+				CategoriaDao.Delete(id);
 
-        refreshUI();
-    }
+			}
+		};
+		refreshAction.Activated += delegate
+		{
 
-    public static object GetId(TreeView treeView)
-    {
-        return Get(treeView, "Id");
-    }
+			TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
 
-    public static object Get(TreeView treeView, string propertyName)
-    {
-        if (!treeView.Selection.GetSelected(out TreeIter treeIter))
-            return null;
-        object model = treeView.Model.GetValue(treeIter, 0);
-        return model.GetType().GetProperty(propertyName).GetValue(model);
-    }
+            
+		};
 
-    private void refreshUI()
-    {
-        bool treeViewIsSelected = treeView.Selection.CountSelectedRows() > 0;
-        editAction.Sensitive = treeViewIsSelected;
-        deleteAction.Sensitive = treeViewIsSelected;
-    }
+		treeView.Selection.Changed += delegate
+		{
+			refreshUI();
+		};
 
-	private void insert()
+		refreshUI();
+
+	}
+	private void refreshUI()
 	{
-		IDbCommand dbCommand =App.Instance.DbConnection.CreateCommand();
-		dbCommand.CommandText = "insert into categoria (nombre) values ('categoria 4')";
-		int filas=dbCommand.ExecuteNonQuery();
+		bool treeViewIsSelected = treeView.Selection.CountSelectedRows() > 0;
+		editAction.Sensitive = treeViewIsSelected;
+		deleteAction.Sensitive = treeViewIsSelected;
 	}
 
-	private void update()
-    {
-		IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
-        dbCommand.CommandText = "update categoria set nombre='categoria 4 modificada' where id =4";      
-		dbCommand.ExecuteNonQuery();
-    }
-	private void update(Categoria categoria)
-    {
-		IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
-		dbCommand.CommandText = "update categoria set nombre=@nombre where id=@id";      
-		DbCommandHelper.AddParameter(dbCommand, "nombre", categoria.Nombre);
-		DbCommandHelper.AddParameter(dbCommand, "id", categoria.Id);
-        dbCommand.ExecuteNonQuery();
-    }
 
-	private void delete()
-    {
-		IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
-        dbCommand.CommandText = "delete from categoria where id=4";
-        dbCommand.ExecuteNonQuery();
-    }
-    protected void OnDeleteEvent(object sender, DeleteEventArgs a)
-    {
-		App.Instance.DbConnection.Close();
+	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
+	{
 		Application.Quit();
-        a.RetVal = true;
-    }
+		a.RetVal = true;
+	}
 }
