@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Serpis.Ad;
 using System.Data;
-namespace CCategoria
+namespace Serpis.Ad.Ventas
 {
     public class CategoriaDao
     {

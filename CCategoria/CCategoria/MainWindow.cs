@@ -6,9 +6,7 @@ using System.Collections.Generic;
 using CCategoria;
 using System.Reflection;
 using Serpis.Ad;
-
-
-
+using Serpis.Ad.Ventas;
 
 public partial class MainWindow : Gtk.Window
 {
