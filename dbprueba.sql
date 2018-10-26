@@ -15,7 +15,7 @@ create table article(
  categoria bigint unsigned
 );
 
-alter table articulo1 add foreignkey categoria references categoria;
+alter table articulo add foreign key (categoria) references categoria(id);
 
 insert into articulo(nombre, precio, categoria) values ('articulo 1', 1.0, 1);
 insert into articulo(nombre, precio, categoria) values ('articulo 2', 2.0, 2);
