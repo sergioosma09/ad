@@ -1,75 +1,81 @@
 ﻿using System;
 using Gtk;
-using MySql.Data.MySqlClient;
-using System.Data;
-using System.Collections.Generic;
 using CCategoria;
-using System.Reflection;
 using Serpis.Ad;
 using Serpis.Ad.Ventas;
+
+public class EntityDaoCategoria : EntityDao<Categoria>{
+    
+}
 
 public partial class MainWindow : Gtk.Window
 {
 
-	public MainWindow() : base(Gtk.WindowType.Toplevel)
-	{
-		Build();
+    public MainWindow() : base(Gtk.WindowType.Toplevel)
+    {
+        Build();
 
-		Title = "Categoría";
+        Title = "Categoría";
 
-		TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
+        EntityDaoCategoria entityDaoCategoria = new EntityDaoCategoria();
+		object defaultulong = Activator.CreateInstance(typeof(ulong));
+		Console.WriteLine("defaultulong= " + defaultulong);
 
-		newAction.Activated += delegate
-		{
-
-			new CategoriaWindow(new Categoria());
-		};
-
-		editAction.Activated += delegate
-		{
-			object id = TreeViewHelper.GetId(treeView);
-			Categoria categoria = CategoriaDao.Load(TreeViewHelper.GetId(treeView));
-			new CategoriaWindow(categoria);
+        //TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
+        TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, entityDaoCategoria.Enumerable);
 
 
-		};
-		deleteAction.Activated += delegate
-		{
+        newAction.Activated += delegate
+        {
 
-			if (WindowHelper.Confirm(this, "¿Quieres eliminar el registro?"))
-			{
-				object id = TreeViewHelper.GetId(treeView);
-				CategoriaDao.Delete(id);
+            new CategoriaWindow(new Categoria());
+        };
 
-			}
-		};
-		refreshAction.Activated += delegate
-		{
+        editAction.Activated += delegate
+        {
+            object id = TreeViewHelper.GetId(treeView);
+            Categoria categoria = CategoriaDao.Load(TreeViewHelper.GetId(treeView));
+            new CategoriaWindow(categoria);
 
-			TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
+
+        };
+        deleteAction.Activated += delegate
+        {
+
+            if (WindowHelper.Confirm(this, "¿Quieres eliminar el registro?"))
+            {
+                object id = TreeViewHelper.GetId(treeView);
+                CategoriaDao.Delete(id);
+
+            }
+        };
+        refreshAction.Activated += delegate
+        {
+
+            TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
 
             
-		};
+        };
 
-		treeView.Selection.Changed += delegate
-		{
-			refreshUI();
-		};
+        treeView.Selection.Changed += delegate
+        {
+            refreshUI();
+        };
 
-		refreshUI();
+        refreshUI();
 
-	}
-	private void refreshUI()
-	{
-		bool treeViewIsSelected = treeView.Selection.CountSelectedRows() > 0;
-		editAction.Sensitive = treeViewIsSelected;
-		deleteAction.Sensitive = treeViewIsSelected;
-	}
+    }
+    private void refreshUI()
+    {
+        bool treeViewIsSelected = treeView.Selection.CountSelectedRows() > 0;
+        editAction.Sensitive = treeViewIsSelected;
+        deleteAction.Sensitive = treeViewIsSelected;
+    }
 
 
-	protected void OnDeleteEvent(object sender, DeleteEventArgs a)
-	{
-		Application.Quit();
-		a.RetVal = true;
-	}
+    protected void OnDeleteEvent(object sender, DeleteEventArgs a)
+    {
+        Application.Quit();
+        a.RetVal = true;
+    }
 }

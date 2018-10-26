@@ -4,16 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 namespace Serpis.Ad.Ventas
 {
-	public class EntityDao<TEntity>{
-		public IEnumerable Enumerable{
-			get{
-				ArrayList list = new ArrayList();
-
-
-				return list;
-			}
-		}
-	}
+	
     public class CategoriaDao
     {
 		private static string selectAll = "select id, nombre from categoria order by id";

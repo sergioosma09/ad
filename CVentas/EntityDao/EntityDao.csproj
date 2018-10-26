@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4435C0F9-241F-4CF4-ABBE-AB511A1E37AF}</ProjectGuid>
+    <ProjectGuid>{845D6529-6121-4138-B288-A1A1F4D44FDD}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CVentas</RootNamespace>
-    <AssemblyName>CVentas</AssemblyName>
+    <RootNamespace>EntityDao</RootNamespace>
+    <AssemblyName>EntityDao</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -28,16 +28,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="CSerpis">
-      <HintPath>..\..\CSerpis\CSerpis\bin\Debug\CSerpis.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Categoria.cs" />
-    <Compile Include="CategoriaDao.cs" />
-    <Compile Include="EntityDao.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
