@@ -70,10 +70,10 @@ namespace Serpis.Ad
 			
 		}
 
-		public void Delete(object id){
+		protected void Delete(object id){
 			
 		}
-		public void insert(object entity)
+		protected void insert(object entity)
         {
 
         }
