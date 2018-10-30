@@ -21,7 +21,6 @@ public partial class MainWindow : Gtk.Window
 		object defaultulong = Activator.CreateInstance(typeof(ulong));
 		Console.WriteLine("defaultulong= " + defaultulong);
 
-        //TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, CategoriaDao.Categorias);
         TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre" }, entityDaoCategoria.Enumerable);
 
 

@@ -54,8 +54,6 @@ namespace Serpis.Ad
 		{
 			
 			return default(TEntity);
-
-
 		
 	}
 
