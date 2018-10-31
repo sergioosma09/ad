@@ -137,7 +137,7 @@ namespace CArticulo
 				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 400;
-			this.DefaultHeight = 195;
+			this.DefaultHeight = 176;
 			this.Show();
 		}
 	}

@@ -79,7 +79,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="CArticulo.ArticuloWindow" design-size="400 195">
+  <widget class="Gtk.Window" id="CArticulo.ArticuloWindow" design-size="400 176">
     <property name="MemberName" />
     <property name="Title" translatable="yes">ArticuloWindow</property>
     <property name="WindowPosition">CenterOnParent</property>

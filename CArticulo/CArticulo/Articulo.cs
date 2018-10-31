@@ -6,7 +6,7 @@ namespace Serpis.Ad.Ventas
 		private ulong id;
         private string nombre;
 		private decimal precio=0;
-		//private ulong? categoria=null;
+		private ulong? categoria=null;
 
         public ulong Id
         {
