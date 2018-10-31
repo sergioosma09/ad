@@ -40,6 +40,9 @@ namespace Serpis.Ad
 					foreach (string propertyName in entityPropertyNames)
 					{
 						object value = dataReader[propertyName];
+						if(value==DBNull.Value){
+							value = null;
+						}
 						entityType.GetProperty(propertyName).SetValue(model, value);
 					}
 					list.Add(model);

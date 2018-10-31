@@ -65,6 +65,12 @@
     <Reference Include="MySql.Data">
       <HintPath>..\..\mysql\MySql.Data.dll</HintPath>
     </Reference>
+<<<<<<< HEAD
+=======
+    <Reference Include="CVentas">
+      <HintPath>..\..\CVentas\CVentas\bin\Debug\CVentas.dll</HintPath>
+    </Reference>
+>>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
