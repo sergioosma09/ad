@@ -65,12 +65,15 @@
     <Reference Include="MySql.Data">
       <HintPath>..\..\mysql\MySql.Data.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
-=======
     <Reference Include="CVentas">
       <HintPath>..\..\CVentas\CVentas\bin\Debug\CVentas.dll</HintPath>
     </Reference>
->>>>>>> master
+    <Reference Include="CVentas">
+      <HintPath>..\..\CVentas\CVentas\bin\Debug\CVentas.dll</HintPath>
+    </Reference>
+    <Reference Include="CSerpisGtk">
+      <HintPath>..\..\CSerpisGtk\CSerpisGtk\bin\Debug\CSerpisGtk.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">

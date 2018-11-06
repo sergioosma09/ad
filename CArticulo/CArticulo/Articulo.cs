@@ -24,11 +24,11 @@ namespace Serpis.Ad.Ventas
 			get { return precio; }
 			set { precio = value; }
 		}
-		//public ulong? Categoria
-   //     {
-			//get { return categoria; }
-			//set { categoria = value; }
+		public ulong? Categoria
+        {
+			get { return categoria; }
+			set { categoria = value; }
 
-        //}
+        }
     }
 }

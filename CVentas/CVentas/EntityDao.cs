@@ -70,15 +70,18 @@ namespace Serpis.Ad
 				update(entity);
 			
 		}
-
-		protected void Delete(object id){
-			
+		//private static string deleteSql = "delete from categoria where id=@id";
+		public void Delete(object id){
+			//IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
+            //dbCommand.CommandText = deleteSql;
+            //DbCommandHelper.AddParameter(dbCommand, "id", id);
+            //dbCommand.ExecuteNonQuery();
 		}
 		protected void insert(object entity)
         {
 
         }
-		public void update(object entity)
+		protected void update(object entity)
         {
 
         }
