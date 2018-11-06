@@ -70,7 +70,7 @@ namespace Serpis.Ad
 				update(entity);
 			
 		}
-		protected static string deleteSql = "delete from {0} where {1}=@id";
+		protected static string deleteSql = "delete from {0} where {1}=@id ";
 		public void Delete(object id){
 			string tableName = entityType.Name.ToLower();
 			IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
