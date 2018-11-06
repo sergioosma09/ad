@@ -70,12 +70,13 @@ namespace Serpis.Ad
 				update(entity);
 			
 		}
-		//private static string deleteSql = "delete from categoria where id=@id";
+		protected static string deleteSql = "delete from {0} where {1}=@id";
 		public void Delete(object id){
-			//IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
-            //dbCommand.CommandText = deleteSql;
-            //DbCommandHelper.AddParameter(dbCommand, "id", id);
-            //dbCommand.ExecuteNonQuery();
+			string tableName = entityType.Name.ToLower();
+			IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
+			dbCommand.CommandText =string.Format(deleteSql,tableName, idPropertyName.ToLower() );
+            DbCommandHelper.AddParameter(dbCommand, "id", id);
+            dbCommand.ExecuteNonQuery();
 		}
 		protected void insert(object entity)
         {
