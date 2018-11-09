@@ -4,7 +4,7 @@ namespace CArticulo
 {
     public partial class ArticuloWindow : Gtk.Window
     {
-		public ArticuloWindow(Articulo) :
+		public ArticuloWindow(Articulo articulo) :
                 base(Gtk.WindowType.Toplevel)
         {
             this.Build();

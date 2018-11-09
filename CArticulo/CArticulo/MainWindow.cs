@@ -3,7 +3,6 @@ using Gtk;
 using Serpis.Ad;
 using Serpis.Ad.Ventas;
 using CArticulo;
-using CCategoria;
 
 
 public partial class MainWindow : Gtk.Window
@@ -24,7 +23,7 @@ public partial class MainWindow : Gtk.Window
 		TreeViewHelper.Fill(treeView, new string[] { "Id", "Nombre","Precio"},articuloDao.Enumerable);
 
 		newAction.Activated += delegate {
-            new ArticuloWindow(new Articulo);
+            new ArticuloWindow(new Articulo());
            
         };
 
