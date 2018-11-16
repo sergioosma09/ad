@@ -96,29 +96,31 @@ namespace Serpis.Ad
             dbCommand.ExecuteNonQuery();
 		}
 
-		protected static string insertSql = "insert into {0} ({1}) values ({2})";
+		protected string insertSql = "insert into {0} ({1}) values ({2})";
 
 		protected void insert(object entity)
         {
-			List<string> propertyNames = new List<string>(new string[] { "id", "Nombre", "Precio", "Categoria" });
-			List<string> fieldWithoutId = new List<string>(propertyNames);
-			List<string> parametes = new List<string>();
-			for (int index = 1; index < propertyNames.Count;index++){
-				fieldWithoutId.Add(propertyNames[index]);
-				parametes.Add("@" + propertyNames[index]);
-			}
-			string tableName = entityType.Name.ToLower();
-			string FieldNamesCsv = string.Join(", ", fieldWithoutId).ToLower();
-			string insertSql = string.Format("insert into {0} ({1}) values ({2})", FieldNamesCsv, tableName, propertyNames);
 			IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
-			dbCommand.CommandText = insertSql;
-            IDataReader dataReader = dbCommand.ExecuteReader();
 
+			List<string> insertPropertyNames = entityPropertyNames.FindAll(item => item != idPropertyName);
+			List<string> parametes = new List<string>();
+			insertPropertyNames.ForEach(item => parametes.Add("@" + item));
+			string tableName = entityType.Name.ToLower();
+			string parametesCsv = string.Join(", " , parametes).ToLower();
+			string insertNamesCsv = string.Join(", ", insertPropertyNames).ToLower();
+
+			dbCommand.CommandText = string.Format(insertSql, tableName, insertPropertyNames, parametesCsv);;
+			foreach(string fieldName in insertPropertyNames){
+				object value = entityType.GetProperty(fieldName).GetValue(entity);
+				DbCommandHelper.AddParameter(dbCommand, fieldName, value);
+			}
+			dbCommand.ExecuteNonQuery();
         }
-
+        
 		protected static string updateSql = "update {0} set {1} where {2}=@id";
 		protected void update(object entity)
         {
+			IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
 			List<string> fieldParametersPairs = new List<string>();
 			List<string> propertyNames = new List<string>(new string[] { "id", "Nombre", "Precio", "Categoria" });
 
@@ -131,10 +133,12 @@ namespace Serpis.Ad
             }
 			string tableName = entityType.Name.ToLower();
 			string FieldNamesCsv = string.Join(", ", fieldParametersPairs).ToLower();
-			string updateSql = string.Format("update {0} set {1} where {2}=@id", FieldNamesCsv, tableName, propertyNames);
-            IDbCommand dbCommand = App.Instance.DbConnection.CreateCommand();
+			dbCommand.CommandText = string.Format(updateSql, FieldNamesCsv, tableName, propertyNames);
+            IDbCommand dbCommandd = App.Instance.DbConnection.CreateCommand();
 			dbCommand.CommandText = updateSql;
             IDataReader dataReader = dbCommand.ExecuteReader();
+            
+
         }
 
 
