@@ -14,15 +14,13 @@ import java.util.Scanner;
 public class GCategoriaMain {
 
 	private static Scanner scanner = new Scanner(System.in);
-	private static Connection connection;
-
 
 
 	public static void main(String[] args) throws SQLException {
-		connection= DriverManager.getConnection("jdbc:mysql://localhost/dbprueba", "root", "sistemas");
+		App.getInstance().setConnection(DriverManager.getConnection("jdbc:mysql://localhost/dbprueba", "root", "sistemas"));
 		Menu.create("Menú Categoría").exitWhen("0 - Salir").add("1 - Nuevo", GCategoriaMain::nuevo).add("2 - Editar",
 				GCategoriaMain::editar).loop();
-		
+		App.getInstance().getConnection().close();
 
 //	List<Action> actions = new ArrayList<>();
 //	actions.add( () -> exit = true );
@@ -34,7 +32,7 @@ public class GCategoriaMain {
 //	int option = Integer.parseInt(scanner.nextLine());
 //	actions.get(option).execute();
 //	}
-		Load();
+		//Load();
 		editar();
 	}
 
@@ -50,45 +48,6 @@ public class GCategoriaMain {
 
 	
 
-	private static void insert() throws SQLException {
-		String insertSql = "insert into categoria (nombre) values (?)";
-		PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
-		preparedStatement.setObject(1, "categoria " + LocalDateTime.now());
-		preparedStatement.executeUpdate();
-		preparedStatement.close();
-	}
 
-	private static void delete(int id) {
-		String deleteSql = "delete from categoria where id=?";
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = connection.prepareStatement(deleteSql);
-			preparedStatement.setInt(1, id);
-			preparedStatement.executeUpdate();
-			preparedStatement.close();
-		} catch (SQLException e) {
-			System.out.println(e);
-			System.out.println("No se puede por el foreign key");
-
-		}
-	}
-
-	private static void Load() throws SQLException {
-
-		String selectSql = "select * from categoria";
-		Statement statement = connection.createStatement();
-		ResultSet resultSet = statement.executeQuery(selectSql);
-		while (resultSet.next())
-			System.out.printf("%s %s\n", resultSet.getObject(1), resultSet.getObject(2));
-		statement.close(); // implicit resultset.close()
-
-	}
-
-	private static void Update() throws SQLException {
-		String updateSql = "update categoria set nombre=@nombre where id=@id";
-		PreparedStatement preparedStatement = connection.prepareStatement(updateSql);
-		preparedStatement.executeUpdate();
-		preparedStatement.close();
-	}
 
 }
