@@ -1,5 +1,0 @@
-INDEX VERSION 1.131+/home/sersai/ad/.metadata/.plugins/org.eclipse.jdt.core
-2257990464.index
-3448833280.index
-1596927589.index
-678253060.index

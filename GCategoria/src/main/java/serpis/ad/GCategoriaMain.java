@@ -22,6 +22,7 @@ public class GCategoriaMain {
 		connection= DriverManager.getConnection("jdbc:mysql://localhost/dbprueba", "root", "sistemas");
 		Menu.create("Menú Categoría").exitWhen("0 - Salir").add("1 - Nuevo", GCategoriaMain::nuevo).add("2 - Editar",
 				GCategoriaMain::editar).loop();
+		
 
 //	List<Action> actions = new ArrayList<>();
 //	actions.add( () -> exit = true );
@@ -33,7 +34,7 @@ public class GCategoriaMain {
 //	int option = Integer.parseInt(scanner.nextLine());
 //	actions.get(option).execute();
 //	}
-
+		Load();
 		editar();
 	}
 
