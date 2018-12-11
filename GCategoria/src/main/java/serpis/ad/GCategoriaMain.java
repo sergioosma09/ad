@@ -14,25 +14,30 @@ import java.util.Scanner;
 public class GCategoriaMain {
 
 	private static Scanner scanner = new Scanner(System.in);
-
+	@FunctionalInterface
+	interface DaoAction {
+		void execute() throws SQLException;
+	}
 
 	public static void main(String[] args) throws SQLException {
 		App.getInstance().setConnection(DriverManager.getConnection("jdbc:mysql://localhost/dbprueba", "root", "sistemas"));
-		Menu.create("Menú Categoría").add("1 - Nuevo",GCategoriaMain::nuevo).add("2 - Editar", GCategoriaMain::editar).exitWhen("3 - Salir").loop();
+		Menu.create("Menú Categoría")
+		.add("\t1 - Nuevo", () -> tryAction(GCategoriaMain::nuevo, "No se ha podido insertar."))
+		.add("\t2 - Editar", () -> tryAction(GCategoriaMain::editar, "No se ha podido modificar"))
+		.add("\t3 - Eliminar", () -> tryAction(GCategoriaMain::eliminar, "No se ha podido eliminar"))
+		.add("\t4 - Consultar", () -> tryAction(GCategoriaMain::consultar, "No se ha podido realizar la consulta"))
+		.add("\t5 - Listar", () -> tryAction(GCategoriaMain::listar, "No se ha podido realizar la consulta"))
+		.exitWhen("\t0 - Salir")
+		.loop();		
 		App.getInstance().getConnection().close();
-
-//	List<Action> actions = new ArrayList<>();
-//	actions.add( () -> exit = true );
-//	actions.add( CategoriaMain::nuevo );
-//	actions.add( CategoriaMain::editar );
-//	
-//	while (!exit) {
-//	System.out.print("0 - Salir\n1 - Nuevo\n2 - Editar\nElige opción: ");
-//	int option = Integer.parseInt(scanner.nextLine());
-//	actions.get(option).execute();
-//	}
-		//Load();
-		editar();
+	}
+	
+	public static void tryAction(DaoAction daoAction, String errorMessage) {
+		try {
+			daoAction.execute();
+		} catch (SQLException ex) {
+			System.out.println(errorMessage);
+		}
 	}
 
 	public static void nuevo() {
