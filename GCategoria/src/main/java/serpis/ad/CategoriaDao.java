@@ -1,10 +1,11 @@
 package serpis.ad;
 
-import java.sql.PreparedStatement;
+import java.sql.PreparedStatement; 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaDao {
@@ -48,9 +49,19 @@ public static int save (Categoria categoria) throws SQLException{
 	else
 		return update(categoria);
 }
+private static String selectAll = "select id, nombre from categoria order by id";
 public static List<Categoria> getAll() throws SQLException{
-	return null;
-}
+		List<Categoria> categorias=new ArrayList<>();
+		Categoria categoria=new Categoria();
+		Statement statement = App.getInstance().getConnection().createStatement();
+		ResultSet resultSet = statement.executeQuery(selectAll);
+		while(resultSet.next()) {
+			categorias.add(categoria);
+		}
+		
+		return categorias;
 	
 	
+	
+	}
 }
