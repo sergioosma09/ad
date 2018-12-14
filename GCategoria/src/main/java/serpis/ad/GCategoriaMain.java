@@ -64,7 +64,7 @@ public class GCategoriaMain {
 			CategoriaDao.save(categoria);
 				
 		}catch(Exception e) {
-			
+			System.out.println("Error");
 		}
 		
 	}
