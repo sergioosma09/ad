@@ -14,7 +14,9 @@ public class CategoriaDao {
 	String insertSql = "insert into categoria (nombre) values (?)";
 	PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(insertSql);
 	preparedStatement.setObject(1, categoria.getNombre());
-	return preparedStatement.executeUpdate();
+	int rowCount=preparedStatement.executeUpdate();
+	preparedStatement.close();
+	return rowCount;
 }
 
 public static int delete(long id) throws SQLException {
@@ -42,9 +44,13 @@ public static Categoria load(long id) throws SQLException {
 }
 
 private static int update(Categoria categoria) throws SQLException {
-	String updateSql = "update categoria set nombre=@nombre where id=@id";
+	String updateSql = "update categoria set nombre=? where id=?";
 	PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(updateSql);
-	return preparedStatement.executeUpdate();
+	preparedStatement.setObject(1, categoria.getNombre());
+	preparedStatement.setObject(2, categoria.getId());
+	int rowCount=preparedStatement.executeUpdate();
+	preparedStatement.close();
+	return rowCount;
 }
 
 public static int save (Categoria categoria) throws SQLException{
