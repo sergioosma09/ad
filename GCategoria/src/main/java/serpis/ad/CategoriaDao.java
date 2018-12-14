@@ -31,18 +31,19 @@ public static int delete(long id) throws SQLException {
 }
 
 public static Categoria load(long id) throws SQLException {
-	Categoria categoria=new Categoria();
+	
 	String selectSql = "select id,nombre from categoria where id=?";
-	PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(selectSql);
+	try(PreparedStatement preparedStatement = App.getInstance().getConnection().prepareStatement(selectSql)){
 	preparedStatement.setObject(1, id);
-	ResultSet resultSet= preparedStatement.executeQuery(selectSql);
+	ResultSet resultSet= preparedStatement.executeQuery();
 	if (resultSet.next()==false) 
 		return null;
-	else
-		categoria.setId( ((BigInteger)resultSet.getObject("id")).longValue());
-		categoria.setNombre((String) resultSet.getObject("nombre"));
-		return categoria;
-	
+
+	Categoria categoria=new Categoria();
+	categoria.setId( ((BigInteger)resultSet.getObject("id")).longValue());
+	categoria.setNombre((String) resultSet.getObject("nombre"));
+	return categoria;
+}
 }
 
 private static int update(Categoria categoria) throws SQLException {
