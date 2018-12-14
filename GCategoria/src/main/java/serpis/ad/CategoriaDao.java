@@ -23,8 +23,10 @@ public static int delete(long id) throws SQLException {
 	String deleteSql = "delete from categoria where id=?";
 	PreparedStatement preparedStatement;
 	preparedStatement = App.getInstance().getConnection().prepareStatement(deleteSql);
-	preparedStatement.setLong(1, id);
-	return preparedStatement.executeUpdate();
+	preparedStatement.setObject(1, id);
+	int rowCount=preparedStatement.executeUpdate();
+	preparedStatement.close();
+	return rowCount;
 
 }
 
