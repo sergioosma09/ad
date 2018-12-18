@@ -57,7 +57,7 @@ public class GCategoriaMain {
 		try {
 			Categoria categoria=CategoriaDao.load(id);
 			if(categoria==null) {
-				CategoriaConsole.idNotExists();
+				CategoriaConsole.showIdNotExists();
 				return;
 			}
 			CategoriaConsole.editCategoria(categoria);		
@@ -80,7 +80,7 @@ public class GCategoriaMain {
 		long id= CategoriaConsole.getId();
 		Categoria categoria=CategoriaDao.load(id);
 		if(categoria==null) {
-			CategoriaConsole.idNotExists();
+			CategoriaConsole.showIdNotExists();
 			return;
 		}
 		CategoriaConsole.show(categoria);
