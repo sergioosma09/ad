@@ -66,9 +66,6 @@ public class PedidoLinea {
 	public void setArticulo(int articulo) {
 		this.articulo = articulo;
 	}
-	
-	
-
 }
 
 
