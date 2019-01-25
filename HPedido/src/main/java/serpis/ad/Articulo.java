@@ -1,5 +1,6 @@
 package serpis.ad;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -16,36 +19,19 @@ public class Articulo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nombre;
-	private float precio;
+	private BigDecimal precio;
+	
+	@ManyToOne
+	@JoinColumn(name="categoria")
 	private Categoria categoria;
 	
 	
-	@OneToMany(mappedBy = "articulo")
-	private List<PedidoLinea> pedidoLinea;
-
-	public List<PedidoLinea> getPedidoLinea() {
-		return pedidoLinea;
-	}
-
-	public void addFactura(PedidoLinea p) {
-
-		pedidoLinea.add(p);
-	}
-
-	public void setListaFacturas(List<PedidoLinea> listaFacturas) {
-		this.pedidoLinea = listaFacturas;
-	}
 
 	public Articulo() {
 		this.nombre = nombre;
 		this.id = id;
-		pedidoLinea = new ArrayList<>();
-
 	}
 
-	public void setPedidoLinea(List<PedidoLinea> pedidoLinea) {
-		this.pedidoLinea = pedidoLinea;
-	}
 
 	public Long getId() {
 		return id;
@@ -63,11 +49,11 @@ public class Articulo {
 		this.nombre = nombre;
 	}
 
-	public float getPrecio() {
+	public BigDecimal getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(float precio) {
+	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
 

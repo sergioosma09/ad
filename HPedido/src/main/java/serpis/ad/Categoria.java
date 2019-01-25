@@ -13,11 +13,6 @@ public class Categoria {
 	private Long id;
 	private String nombre;
 
-	public Categoria() {
-		this.nombre = nombre;
-		this.id = id;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -32,5 +27,9 @@ public class Categoria {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	@Override
+	public String toString() {
+		return String.format("{%s}-%s", id, nombre);
 	}
 }
