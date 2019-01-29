@@ -2,9 +2,11 @@ package serpis.ad;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,14 +21,20 @@ public class PedidoMain {
 		entityManager.getTransaction().begin();
 		
 		List<Categoria> categorias=entityManager.createQuery("select c from Categoria c", Categoria.class).getResultList();
+		List<Cliente> clientes=entityManager.createQuery("select cl from Cliente cl", Cliente.class).getResultList();
+
 		
 		Articulo articulo=newArticulo();
-		//articulo=entityManager.find(Articulo.class, 1L);
+		//articulo=entityManager.find(Articulo.class, 4L);
+		Pedido pedido=newPedido();
 		
 		articulo.setCategoria(categorias.get(new Random().nextInt(categorias.size())));
 		entityManager.persist(articulo);
+		pedido.setCliente(clientes.get(new Random().nextInt(clientes.size())));
+		entityManager.persist(pedido);
 		
 		show(articulo);
+		showPedido(pedido);
 		
 		entityManager.getTransaction().commit();
 		entityManager.close();
@@ -34,7 +42,12 @@ public class PedidoMain {
 		System.out.println("Añadido articulo. Pulsa Enter para continuar...");
 		new Scanner(System.in).nextLine();
 		
-		remove(articulo);
+		//remove(articulo);
+		
+		doInJPA(entityManagerFactory, entityManager2 ->  {
+			Articulo articulo2=entityManager2.getReference(Articulo.class, articulo.getId());
+			entityManager2.remove(articulo2);
+		});
 		
 		entityManagerFactory.close();
 
@@ -43,6 +56,11 @@ public class PedidoMain {
 		System.out.printf("%4s %-30s %-30s %s %n", articulo.getId(), articulo.getNombre(), articulo.getCategoria(), articulo.getPrecio());
 	
 	}
+	private static void showPedido(Pedido pedido) {
+		System.out.printf("%4s %-30s %-30s %n", pedido.getId(), pedido.getFecha(),pedido.getImporte());
+	
+	}
+	
 	private static void remove(Articulo articulo) {
 		
 		EntityManager entityManager=entityManagerFactory.createEntityManager();
@@ -55,11 +73,26 @@ public class PedidoMain {
 		entityManager.close();
 		
 	}
-	private static Articulo newArticulo() {
+	private static void doInJPA(EntityManagerFactory entityManagerFactory, Consumer<EntityManager> consumer) {
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		consumer.accept(entityManager);
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+	
+	public static Articulo newArticulo() {
 		Articulo articulo=new Articulo();
 		articulo.setNombre("nuevo " + LocalDateTime.now());
 		articulo.setPrecio(new BigDecimal(1.5));
 		return articulo;
+	}
+	
+	private static Pedido newPedido() {
+		Pedido pedido=new Pedido();
+		pedido.setFecha(new Date());
+		pedido.setImporte(9);
+		return pedido;
 	}
 
 }

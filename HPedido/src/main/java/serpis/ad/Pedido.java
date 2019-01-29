@@ -1,12 +1,14 @@
 package serpis.ad;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Pedido {
@@ -16,7 +18,10 @@ public class Pedido {
 	private Long id;
 	private Date fecha;;
 	private float importe;
-	private int cliente;
+	
+	@ManyToOne
+	@JoinColumn(name="cliente")
+	private Cliente cliente;
 
 	public float getImporte() {
 		return importe;
@@ -38,15 +43,17 @@ public class Pedido {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFecha(Date date) {
+		this.fecha = date;
 	}
 
-	public int getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(int cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
+
 }

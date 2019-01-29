@@ -25,12 +25,6 @@ public class Articulo {
 	@JoinColumn(name="categoria")
 	private Categoria categoria;
 	
-	
-
-	public Articulo() {
-		this.nombre = nombre;
-		this.id = id;
-	}
 
 
 	public Long getId() {
