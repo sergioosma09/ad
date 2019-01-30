@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -48,7 +49,11 @@ public class PedidoMain {
 			Articulo articulo2=entityManager2.getReference(Articulo.class, articulo.getId());
 			entityManager2.remove(articulo2);
 		});
-		
+		Articulo articulo3= doInJPA(entityManagerFactory, entityManager2 ->{
+			
+			return entityManager2.find(Articulo.class, 5L);	
+		});
+		show(articulo3);
 		entityManagerFactory.close();
 
 	}
@@ -79,6 +84,14 @@ public class PedidoMain {
 		consumer.accept(entityManager);
 		entityManager.getTransaction().commit();
 		entityManager.close();
+	}
+	private static <R> R doInJPA(EntityManagerFactory entityManagerFactory, Function<EntityManager, R> function) {
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		R result= function.apply(entityManager);
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		return result;
 	}
 	
 	public static Articulo newArticulo() {
