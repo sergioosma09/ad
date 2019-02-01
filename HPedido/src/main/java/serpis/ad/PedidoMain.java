@@ -23,19 +23,24 @@ public class PedidoMain {
 		
 		List<Categoria> categorias=entityManager.createQuery("select c from Categoria c", Categoria.class).getResultList();
 		List<Cliente> clientes=entityManager.createQuery("select cl from Cliente cl", Cliente.class).getResultList();
-
+		List<Pedido> pedidos=entityManager.createQuery("select p from Pedido p", Pedido.class).getResultList();
+		List<Articulo> articulos=entityManager.createQuery("select a from Articulo a", Articulo.class).getResultList();
 		
 		Articulo articulo=newArticulo();
-		//articulo=entityManager.find(Articulo.class, 4L);
 		Pedido pedido=newPedido();
+		PedidoLinea pedidoLinea=newPedidoLinea();
 		
 		articulo.setCategoria(categorias.get(new Random().nextInt(categorias.size())));
 		entityManager.persist(articulo);
 		pedido.setCliente(clientes.get(new Random().nextInt(clientes.size())));
 		entityManager.persist(pedido);
+		pedidoLinea.setPedido(pedidos.get(new Random().nextInt(pedidos.size())));
+		entityManager.persist(pedidoLinea);
+		pedidoLinea.setArticulo(articulos.get(new Random().nextInt(articulos.size())));
 		
 		show(articulo);
 		showPedido(pedido);
+		showPedidoLinea(pedidoLinea);
 		
 		entityManager.getTransaction().commit();
 		entityManager.close();
@@ -43,7 +48,9 @@ public class PedidoMain {
 		System.out.println("Añadido articulo. Pulsa Enter para continuar...");
 		new Scanner(System.in).nextLine();
 		
-		//remove(articulo);
+//		remove(articulo);
+//		remove(pedido);
+//		remove(pedidoLinea);
 		
 		doInJPA(entityManagerFactory, entityManager2 ->  {
 			Articulo articulo2=entityManager2.getReference(Articulo.class, articulo.getId());
@@ -65,6 +72,11 @@ public class PedidoMain {
 		System.out.printf("%4s %-30s %-30s %n", pedido.getId(), pedido.getFecha(),pedido.getImporte());
 	
 	}
+	private static void showPedidoLinea(PedidoLinea pedidoLinea) {
+		System.out.printf("%4s %-30s %-30s %n", pedidoLinea.getId(), pedidoLinea.getPrecio(),pedidoLinea.getUnidades(),pedidoLinea.getImporte());
+	
+	}
+	
 	
 	private static void remove(Articulo articulo) {
 		
@@ -78,6 +90,32 @@ public class PedidoMain {
 		entityManager.close();
 		
 	}
+private static void remove(Pedido pedido) {
+		
+		EntityManager entityManager=entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		
+		pedido=entityManager.getReference(Pedido.class, pedido.getId());
+		entityManager.remove(pedido);
+		
+		entityManager.getTransaction().commit();
+		entityManager.close();
+		
+	}
+private static void remove(PedidoLinea pedidoLinea) {
+	
+	EntityManager entityManager=entityManagerFactory.createEntityManager();
+	entityManager.getTransaction().begin();
+	
+	pedidoLinea=entityManager.getReference(PedidoLinea.class, pedidoLinea.getId());
+	entityManager.remove(pedidoLinea);
+	
+	entityManager.getTransaction().commit();
+	entityManager.close();
+	
+}
+
+	
 	private static void doInJPA(EntityManagerFactory entityManagerFactory, Consumer<EntityManager> consumer) {
 		EntityManager entityManager=entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
@@ -106,6 +144,13 @@ public class PedidoMain {
 		pedido.setFecha(new Date());
 		pedido.setImporte(9);
 		return pedido;
+	}
+	private static PedidoLinea newPedidoLinea() {
+		PedidoLinea pedidoLinea=new PedidoLinea();
+		pedidoLinea.setPrecio(6);
+		pedidoLinea.setUnidades(2);
+		pedidoLinea.setImporte(9);
+		return pedidoLinea;
 	}
 
 }

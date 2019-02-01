@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class PedidoLinea {
@@ -16,8 +18,14 @@ public class PedidoLinea {
 	private float precio;
 	private float unidades;
 	private float importe;
-	private int pedido;
-	private int articulo;
+	
+	@ManyToOne
+	@JoinColumn(name="articulo")
+	private Articulo articulo;
+	
+	@ManyToOne
+	@JoinColumn(name="pedido")
+	private Pedido pedido;
 
 	public Long getId() {
 		return id;
@@ -51,21 +59,23 @@ public class PedidoLinea {
 		this.importe = importe;
 	}
 
-	public int getPedido() {
+	public Pedido getPedido() {
 		return pedido;
 	}
 
-	public void setPedido(int pedido) {
+	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
 
-	public int getArticulo() {
+	public Articulo getArticulo() {
 		return articulo;
 	}
 
-	public void setArticulo(int articulo) {
+	public void setArticulo(Articulo articulo) {
 		this.articulo = articulo;
 	}
+
+	
 }
 
 
