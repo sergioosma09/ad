@@ -18,32 +18,40 @@ public class PedidoMain {
 	public static void main(String[] args) {
 		entityManagerFactory= Persistence.createEntityManagerFactory("serpis.ad.hmysql");
 		
-		EntityManager entityManager=entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
+//		EntityManager entityManager=entityManagerFactory.createEntityManager();
+//		entityManager.getTransaction().begin();
 		
-		List<Categoria> categorias=entityManager.createQuery("select c from Categoria c", Categoria.class).getResultList();
-		List<Cliente> clientes=entityManager.createQuery("select cl from Cliente cl", Cliente.class).getResultList();
-		List<Pedido> pedidos=entityManager.createQuery("select p from Pedido p", Pedido.class).getResultList();
-		List<Articulo> articulos=entityManager.createQuery("select a from Articulo a", Articulo.class).getResultList();
+		List<Categoria> categorias=doInJPA(entityManagerFactory, entityManager -> {
+			return	entityManager.createQuery("select c from Categoria c", Categoria.class).getResultList();
+		});
+		List<Cliente> clientes=doInJPA(entityManagerFactory, entityManager -> {
+			return	entityManager.createQuery("select cl from Cliente cl", Cliente.class).getResultList();
+		});
+		List<Pedido> pedidos=doInJPA(entityManagerFactory, entityManager -> {
+			return	entityManager.createQuery("select p from Pedido p", Pedido.class).getResultList();
+		});
+		List<Articulo> articulos=doInJPA(entityManagerFactory, entityManager -> {
+			return	entityManager.createQuery("select a from Articulo a", Articulo.class).getResultList();
+		});
 		
 		Articulo articulo=newArticulo();
 		Pedido pedido=newPedido();
 		PedidoLinea pedidoLinea=newPedidoLinea();
 		
-		articulo.setCategoria(categorias.get(new Random().nextInt(categorias.size())));
-		entityManager.persist(articulo);
-		pedido.setCliente(clientes.get(new Random().nextInt(clientes.size())));
-		entityManager.persist(pedido);
-		pedidoLinea.setPedido(pedidos.get(new Random().nextInt(pedidos.size())));
-		entityManager.persist(pedidoLinea);
-		pedidoLinea.setArticulo(articulos.get(new Random().nextInt(articulos.size())));
+//		articulo.setCategoria(categorias.get(new Random().nextInt(categorias.size())));
+//		entityManager.persist(articulo);
+//		pedido.setCliente(clientes.get(new Random().nextInt(clientes.size())));
+//		entityManager.persist(pedido);
+//		pedidoLinea.setPedido(pedidos.get(new Random().nextInt(pedidos.size())));
+//		entityManager.persist(pedidoLinea);
+//		pedidoLinea.setArticulo(articulos.get(new Random().nextInt(articulos.size())));
 		
 		show(articulo);
 		showPedido(pedido);
 		showPedidoLinea(pedidoLinea);
 		
-		entityManager.getTransaction().commit();
-		entityManager.close();
+//		entityManager.getTransaction().commit();
+//		entityManager.close();
 		
 		System.out.println("Añadido articulo. Pulsa Enter para continuar...");
 		new Scanner(System.in).nextLine();
