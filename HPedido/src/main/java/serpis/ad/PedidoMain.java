@@ -87,7 +87,24 @@ public class PedidoMain {
 		System.out.printf("%4s %-30s %-30s %n", pedidoLinea.getId(), pedidoLinea.getPrecio(),pedidoLinea.getUnidades(),pedidoLinea.getImporte());
 	
 	}
-	
+	public static void tryCatchFinally() {
+		Object item=null;
+		EntityManager entityManager=null;
+		entityManager = App.getInstance().getEntityManagerFactory().createEntityManager();
+		entityManager.getTransaction().begin();
+		try {
+		
+		entityManager.persist(item);
+		entityManager.getTransaction().commit();
+		}catch(Exception e) {
+			entityManager.getTransaction().rollback();
+			throw e;
+		}
+		finally {
+			entityManager.close();
+		}
+		
+	}
 
 
 }
